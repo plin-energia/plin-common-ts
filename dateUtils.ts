@@ -5,7 +5,7 @@
  *
  * @param {string} date - The input date string to be parsed.
  * @param {string} [format="dd/MM/yyyy hh:mm:ss"] - The format string indicating the order of date and time components.
- *   Valid placeholders: "dd", "MM", "yyyy", "hh", "mm", "ss". Other separators like "/", ":", and " " are also supported.
+ *   Valid placeholders: "dd", "MM", "yyyy", "hh", "mm", "ss". Other separators like "/", ":", "-" and " " are also supported.
  *
  *   - dd: day
  *   - MM: month
@@ -33,22 +33,33 @@
  * }
  *
  * // Invalid usage:
- * const invalidDate = toDate("2022-01-15", "yyyy-mm-dd");
+ * const invalidDate = toDate("2022/01/15 12:30:45", "dd/MM/yyyy hh:mm:ss");
  * if (invalidDate !== null) {
  *   // This block will not be executed
- *   // mm placeholder is used for minute, not month
- *   // a valid placeholder would be "yyyy-MM-dd"
+ *   // Year and day components are swapped
  *   console.log(invalidDate);
  * } else {
  *   console.log("Invalid date format or components"); // Output: Invalid date format or components
+ * }
+ *
+ * // Possible mistake in the format string:
+ * // "mm" placeholder is used for minute, not month
+ * // the correct placeholder would be "dd-MM-yyyy"
+ * const myDate = toDate("03/05/2023", "dd/mm/yyyy");
+ * if (myDate !== null) {
+ *  // Output if timezone is UTC: Tue Jan 03 2023 00:05:00 GMT+0000 (Coordinated Universal Time)
+ *  // Output if timezone is GMT-0300: Tue Jan 03 2023 00:05:00 GMT-0300 (Horário Padrão de Brasília)
+ *  console.log(myDate.toString());
+ * } else {
+ *  console.log("Invalid date format or components");
  * }
  */
 export const toDate = (
     date: string,
     format: string = "dd/MM/yyyy hh:mm:ss"
 ): Date | null => {
-    const formatParts = format.split(/[/ :]/);
-    const dateParts = date.split(/[/ :]/);
+    const formatParts = format.split(/[/ :-]/);
+    const dateParts = date.split(/[/ :-]/);
 
     if (formatParts.length !== dateParts.length) {
         return null;
