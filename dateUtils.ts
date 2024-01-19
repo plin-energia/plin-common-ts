@@ -83,9 +83,6 @@ export const toDate = (
         components.second
     );
 
-    console.log(components);
-    console.log(constructedDate);
-
     // Assert that the date components match the input
     if (
         constructedDate.getDate() !== components.day ||
