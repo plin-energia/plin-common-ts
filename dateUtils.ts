@@ -108,12 +108,12 @@ export const toDate = (
  *
  * @example
  * // Format date without time components
- * const formattedDate = strfDate(new Date(2022, 0, 15), "pt-BR");
+ * const formattedDate = strfDate(new Date(2022, 0, 15));
  * console.log(formattedDate); // Output: 15/01/2022
  *
  * // Format date with time components
- * const formattedDateTime = strfDate(new Date(2022, 0, 15, 12, 30, 45), "pt-BR", true);
- * console.log(formattedDateTime); // Output: 15/01/2022 12:30:45
+ * const formattedDateTime = strfDate(new Date(2022, 0, 15, 12, 30, 45), true);
+ * console.log(formattedDateTime); // Output: 15/01/2022, 12:30:45
  */
 export const strfDate = (
     date: Date,
